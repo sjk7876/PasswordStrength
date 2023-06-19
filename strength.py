@@ -211,7 +211,7 @@ def main():
                 
         elif verbosity == 2:
             outF.write("Score (Max 9)\tStrength\tPassword\n")
-            outF.write("--------------------------------\n")
+            outF.write("----------------------------------------\n")
             
             for p in passwordList:
                 outF.write(str(p.score) + "\t\t" + p.strength + "\t" + p.password + "\n")
