@@ -103,14 +103,25 @@ def checkStrength(userPassword, commonPasswords, commonWords):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Checks the strength of a given list of passwords",
+                                    formatter_class=argparse.ArgumentDefaultsHelpFormatter)    
+    parser.add_argument("-i", "--input_file", default="stdin", help="location of the input file")
+    parser.add_argument("-o", "--output_file", default="stdout", help="location of the output file")
+    parser.add_argument("-v", "--verbosity", default="2", type=int, choices=range(1,4), help="how detailed the output should be (1-3)")
+    args = vars(parser.parse_args())
+    
     passwordList = []
     
-    # Defaults
-    outFile = "stdin"
-    inFile = "stdin" 
+    # Input Arguments
+    inputFile = args["input_file"]
+    outputFile = args["output_file"]
+    verbosity = args["verbosity"]
     
-    # Grab input from stdin
+    # Print fancy jazz
     print(ASCII_ART)
+            
+    # Grab input from stdin
+    
     print("Enter in a newline separated list of passwords, ending with a blank line:")
     while True:
         password = input()
@@ -131,20 +142,6 @@ def main():
         print("Score:", checkStrength(p, commonPasswords, commonWords))
         print()
         
-        
-
-# parser = argparse.ArgumentParser(description="Just an example",
-#                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-# parser.add_argument("-a", "--archive", action="store_true", help="archive mode")
-# parser.add_argument("-v", "--verbose", action="store_true", help="increase verbosity")
-# parser.add_argument("-B", "--block-size", help="checksum blocksize")
-# parser.add_argument("--ignore-existing", action="store_true", help="skip files that exist")
-# parser.add_argument("--exclude", help="files to exclude")
-# parser.add_argument("src", help="Source location")
-# parser.add_argument("dest", help="Destination location")
-# args = parser.parse_args()
-# config = vars(args)
-# print(config)
 
 
 if (__name__ == "__main__"):
