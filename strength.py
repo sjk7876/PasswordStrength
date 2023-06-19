@@ -1,18 +1,18 @@
 import string
 import argparse
 
-ASCII_ART = "\
---------------------------------------------------------------------------\n\
-\t\t      _                        _   _     \n\
-\t\t     | |                      | | | |    \n\
-\t\t  ___| |_ _ __ ___ _ __   __ _| |_| |__  \n\
-\t\t / __| __| '__/ _ \ '_ \ / _` | __| '_ \ \n\
-\t\t \__ \ |_| | |  __/ | | | (_| | |_| | | |\n\
-\t\t |___/\__|_|  \___|_| |_|\__, |\__|_| |_|\n\
-\t\t                          __/ |          \n\
-\t\t                         |___/           \n\
---------------------------------------------------------------------------"
 
+ASCII_ART = "\
+|--------------------------------------------------------------------------|\n\
+|\t\t      _                        _   _     \t\t   |\n\
+|\t\t     | |                      | | | |    \t\t   |\n\
+|\t\t  ___| |_ _ __ ___ _ __   __ _| |_| |__  \t\t   |\n\
+|\t\t / __| __| '__/ _ \ '_ \ / _` | __| '_ \ \t\t   |\n\
+|\t\t \__ \ |_| | |  __/ | | | (_| | |_| | | |\t\t   |\n\
+|\t\t |___/\__|_|  \___|_| |_|\__, |\__|_| |_|\t\t   |\n\
+|\t\t                          __/ |          \t\t   |\n\
+|\t\t                         |___/           \t\t   |\n\
+|--------------------------------------------------------------------------|"
 
 
 # Global Password Strength Requirements
@@ -23,7 +23,19 @@ NUM_SYMBOLS = 2
 NUM_CHARACTERS = 14
 
 
-def checkStrength(userPassword, commonPasswords, commonWords):
+class Password:
+    def __init__(self, password):
+        self.password = password
+        self.score = 0
+        self.length = 0
+        self.uppers = 0
+        self.lowers = 0
+        self.symbol = 0
+        self.number = 0
+        self.note = ""
+
+
+def checkStrength(p, commonPasswords, commonWords):
     # Default Password Rules
     #   No spaces
     #   At least 14 characters
@@ -42,58 +54,49 @@ def checkStrength(userPassword, commonPasswords, commonWords):
     # 3-4 = weak
     # 0-2 = very weak
     
-    score = 0
-    length = 0
-    uppers = 0
-    lowers = 0
-    symbol = 0
-    number = 0
-    
-    answer = commonPasswords.find(userPassword)
+    answer = commonPasswords.find(p.password)
     if answer != -1:
-        print("Password found in list of most common passwords")
-        return 0
+        p.note = "Password found in list of most common passwords"
+        return -1
         
     answer = 0
     
-    answer = commonWords.find(userPassword)
+    answer = commonWords.find(p.password)
     if answer != -1:
-        print("Password found in list of common words")
+        p.note = "Password found in list of common words"
         return -1
         
     
-    if len(userPassword) > 1024:
-        print("Password too long")
+    if len(p.password) > 1024:
+        p.note = "Password too long"
         return -1
     
-    elif len(userPassword) >= 14:
-        length = 1
+    elif len(p.password) >= 14:
+        p.length = 1
       
-    for letter in userPassword:
-        if letter in string.punctuation and symbol < NUM_SYMBOLS:
-            symbol = symbol + 1
+    for letter in p.password:
+        if letter in string.punctuation and p.symbol < NUM_SYMBOLS:
+            p.symbol = p.symbol + 1
             continue
             
         if letter.isalpha:
             if letter.isdigit():
-                if number < NUM_NUMBERS:
-                    number = number + 1
+                if p.number < NUM_NUMBERS:
+                    p.number = p.number + 1
                 continue
             
             if letter.isupper():
-                if uppers < NUM_UPPER:
-                    uppers = uppers + 1
+                if p.uppers < NUM_UPPER:
+                    p.uppers = p.uppers + 1
                 continue
             
             if letter.islower():
-                if lowers < NUM_LOWER:
-                    lowers = lowers + 1
+                if p.lowers < NUM_LOWER:
+                    p.lowers = p.lowers + 1
                 continue
     
-    score = length + uppers + lowers + symbol + number
-    
-    return score
-        
+    p.score = p.length + p.uppers + p.lowers + p.symbol + p.number
+            
     # print("score:", score)
     # print("length:", length)
     # print("upper:", uppers)
@@ -117,31 +120,96 @@ def main():
     outputFile = args["output_file"]
     verbosity = args["verbosity"]
     
+    # Check if input file exists
+    if inputFile != "stdin":
+        try:
+            inTest = open(inputFile, "r")
+            inTest.close()
+                
+        except FileNotFoundError:
+            print("File", inputFile, "not found")
+            return 0
+    
+    # # Check if output file exists
+    # if outputFile != "stdout":
+    #     try:
+    #         f = open(outputFile, "r")
+                
+    #     except FileNotFoundError:
+    #         print("File", outputFile, "not found")
+    #         return 0
+    
     # Print fancy jazz
     print(ASCII_ART)
+
+    # Grab passwords from given location
+    if inputFile == "stdin":
+        print("Enter in a newline separated list of passwords, ending with a blank line:")
+        while True:
+            t = input()
             
-    # Grab input from stdin
-    
-    print("Enter in a newline separated list of passwords, ending with a blank line:")
-    while True:
-        password = input()
-        
-        if password == "":
-            break
+            if t == "":
+                break
             
-        passwordList.append(password)
+            temp = Password("")
+            temp.password = t.rstrip()
+            
+            passwordList.append(temp)
     
-    f = open("100k_password.txt", "r", encoding="utf-8")
-    commonPasswords = f.read()
+    else:
+        try:
+            inF = open(inputFile, "r")
+            inputLines = inF.readlines()
+            
+            for line in inputLines:
+                temp = Password("")
+                temp.password = line.rstrip()
+                
+                passwordList.append(temp)
+            
+            inF.close()
+            
+        except:
+            print("Error reading input file -", inputFile)
     
-    f = open("10k_words.txt", "r", encoding="utf-8")
-    commonWords = f.read()
+    # for p in passwordList:
+    #     print(p.password)
     
-    for p in passwordList:
-        print("Password:", p)
-        print("Score:", checkStrength(p, commonPasswords, commonWords))
-        print()
-        
+    # return 0
+    
+    passF = open("100k_password.txt", "r", encoding="utf-8")
+    commonPasswords = passF.read()
+    passF.close()
+    
+    wordF = open("10k_words.txt", "r", encoding="utf-8")
+    commonWords = wordF.read()
+    wordF.close()
+    
+    if outputFile == "stdout":
+        for p in passwordList:
+            checkStrength(p, commonPasswords, commonWords)
+            
+            print("Password:", p.password, end="\t")
+            print("Score:", p.score)
+            print()
+    
+    else:
+        try:
+            outF = open(outputFile, "w")
+            
+            lines = []
+            
+            for p in passwordList:
+                checkStrength(p, commonPasswords, commonWords)                
+                lines.append("Password: " + p.password + "\tScore:" + str(p.score) + "\n")
+                            
+            outF.writelines(lines)
+            outF.close()
+            
+            print("Written to file -", outputFile)
+            
+        except:
+            print("Error writing to output file -", outputFile)
 
 
 if (__name__ == "__main__"):
