@@ -144,7 +144,8 @@ def main():
             return 0
     
     # Print fancy jazz
-    print(ASCII_ART)
+    if inputFile == None or outputFile == None:
+        print(ASCII_ART)
     
     # Open files for future checks
     passF = open("100k_password.txt", "r", encoding="utf-8")
