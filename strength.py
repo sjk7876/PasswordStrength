@@ -3,24 +3,53 @@ import argparse
 import sys
 
 
-ASCII_ART1 = '''
-|--------------------------------------------------------------------------|\n
-|\t\t      _                        _   _     \t\t   |\n
-|\t\t     | |                      | | | |    \t\t   |\n
-|\t\t  ___| |_ _ __ ___ _ __   __ _| |_| |__  \t\t   |\n
-|\t\t / __| __| '__/ _ \ '_ \ / _` | __| '_ \ \t\t   |\n
-|\t\t \__ \ |_| | |  __/ | | | (_| | |_| | | |\t\t   |\n
-|\t\t |___/\__|_|  \___|_| |_|\__, |\__|_| |_|\t\t   |\n
-|\t\t                          __/ |          \t\t   |\n
-|\t\t                         |___/           \t\t   |\n
-|--------------------------------------------------------------------------|'''
+ASCII_ART_BANNER = '''
+|----------------------------------------------------------------------------|
+|     ___  ____ ____ ____ _ _ _ ____ ____ ___     ___ _ _  _ ____    /\_/\   |
+|     |__] |__| [__  [__  | | | |  | |__/ |  \     |  | |\/| |___   ( o.o )  |
+|     |    |  | ___] ___] |_|_| |__| |  \ |__/     |  | |  | |___    > ^ <   |
+|----------------------------------------------------------------------------|\n'''
 
-ASCII_ART = '''\
-|-------------------------------------------------------------------------|
-|\t___  ____ ____ ____ _ _ _ ____ ____ ___     ___ _ _  _ ____ \t  |
-|\t|__] |__| [__  [__  | | | |  | |__/ |  \     |  | |\/| |___ \t  |
-|\t|    |  | ___] ___] |_|_| |__| |  \ |__/     |  | |  | |___ \t  |
-|-------------------------------------------------------------------------|\n'''
+ASCII_ART_NYAN = '''\n
+                                                                            
+      ▒▒▒▒▒▒▒▒▒▒▒▒              ████████████████████████████                
+  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██                            ██              
+  ▒▒▒▒▒▒▒▒░░▒▒░░▒▒▒▒▒▒▒▒▒▒▒▒██    ░░░░░░░░▒▒░░░░▒▒░░░░░░      ██            
+  ░░▒▒░░▒▒▒▒░░░░░░▒▒▒▒▒▒░░▒▒██  ░░░░▒▒░░░░░░░░████░░░░░░░░░░  ██  ████      
+  ▒▒░░░░░░░░░░░░████████░░░░██  ░░░░░░░░░░░░██▒▒▒▒██░░░░▒▒░░  ████▒▒▒▒██    
+  ░░░░░░░░  ░░██▒▒▒▒▒▒████████  ░░░░░░░░░░░░██▒▒▒▒▒▒██░░░░░░  ██▒▒▒▒▒▒██    
+  ░░  ░░░░  ░░████▒▒▒▒▒▒▒▒▒▒██  ░░░░░░▒▒░░░░██▒▒▒▒▒▒▒▒████████▒▒▒▒▒▒▒▒██    
+  ░░    ░░░░  ░░  ████████▒▒██  ░░░░░░░░░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██    
+  ░░░░  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██████  ░░░░░░░░▒▒██▒▒▒▒▒▒  ██▒▒▒▒▒▒▒▒▒▒  ██▒▒▒▒██  
+  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██  ░░▒▒░░░░░░██▒▒▒▒▒▒████▒▒▒▒▒▒██▒▒████▒▒▒▒██  
+  ▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒██  ░░░░░░▒▒░░██▒▒░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░██  
+  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒████    ░░▒▒░░░░██▒▒░░░░▒▒██▒▒▒▒██▒▒▒▒██▒▒░░░░██  
+  ▓▓▓▓▓▓          ▓▓▒▒████████      ░░░░░░░░██▒▒▒▒▒▒██████████████▒▒▒▒██    
+                    ██▒▒▒▒▒▒████              ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██      
+                    ██▒▒▒▒██  ██████████████████████████████████████        
+                    ██████      ██▒▒▒▒██      ██▒▒▒▒██  ██▒▒▒▒██            
+                                  ██████        ██████    ██████            
+                                                                            
+'''
+
+ASCII_ART_COOL = '''\n
+    ████                  ████    
+  ██▒▒▒▒██              ██▒▒▒▒██  
+  ██▒▒▒▒▒▒██          ██▒▒▒▒▒▒██  
+  ██▒▒▒▒▒▒▒▒██████████▒▒▒▒▒▒▒▒██  
+  ██▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒██  
+  ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██  
+  ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██  
+██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+██████████████████████████████████
+████  ██  ██████▒▒██  ██  ████████
+██▒▒██  ██████▒▒██▒▒██  ██████░░██
+██▒▒░░██████▒▒▒▒▒▒▒▒▒▒██████░░░░██
+██▒▒░░░░░░▒▒▒▒▒▒██▒▒▒▒▒▒▒▒░░░░░░██
+  ██▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒██  
+    ██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██    
+    ██████████████████████████    
+'''
 
 
 
@@ -120,6 +149,10 @@ class Password:
 
 
 def main():
+    # Fun little things
+    nyan = False
+    cool = False
+
     # Handle parameters
     parser = argparse.ArgumentParser(description="Checks the strength of a given list of passwords",
                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)    
@@ -145,7 +178,7 @@ def main():
     
     # Print fancy jazz
     if inputFile == None or outputFile == None:
-        print(ASCII_ART)
+        print(ASCII_ART_BANNER)
     
     # Open files for future checks
     passF = open("100k_password.txt", "r", encoding="utf-8")
@@ -161,7 +194,7 @@ def main():
     # Grab passwords from given location
     try:
         if inputFile == None:
-            print("> Enter a list of passwords, with with each password on its own line and\n> an empty line to finish.")
+            print("> Enter a list of passwords, with with each password \n> on its own line and an empty line to finish.")
             inF = sys.stdin
         else:
             inF = open(inputFile, "r")
@@ -174,8 +207,12 @@ def main():
                                     
             if temp.password == "":
                 break
+            elif "nyan" in temp.password:
+                nyan = True
+            elif "cool" in temp.password:
+                cool = True
                                     
-            temp.update(commonPasswords, commonWords)  
+            temp.update(commonPasswords, commonWords)
                                                     
             passwordList.append(temp)
                     
@@ -205,9 +242,6 @@ def main():
             
             for p in passwordList:
                 outF.write(p.strength + "\t" + p.password + "\n")
-                            
-        
-            
                 
         elif verbosity == 2:
             outF.write("Score (Max 9)\tStrength\tPassword\n")
@@ -224,6 +258,11 @@ def main():
                 outF.write(str(p.length) + "\t" + str(p.uppers) + "\t\t" + \
                     str(p.lowers) + "\t\t" + str(p.symbol) + "\t\t" + str(p.number) + "\t\t" + \
                     str(p.score) + "\t\t" + p.strength + "\t" + p.password + "\n")
+        
+        if outputFile == None and nyan:
+            print(ASCII_ART_NYAN)
+        if outputFile == None and cool:
+            print(ASCII_ART_COOL)
                                         
         outF.close()
             
