@@ -1,6 +1,6 @@
 import string
 
-def main():
+def checkStrength(userPassword):
     # Password Rules
     #   No spaces
     #   At least 14 characters
@@ -25,13 +25,27 @@ def main():
     symbol = 0
     number = 0
     
-    # Grab input from stdin
-    print("Enter the password to check here: ", end='')
-    userPassword = input()
+    f = open("100k_password.txt", "r", encoding="utf-8")
+    lines = f.read()
+    answer = lines.find(userPassword)
+    if answer != -1:
+        print("Password found in list of most common passwords")
+        return 0
+        
+    answer = 0
+        
+    f = open("10k_words.txt", "r", encoding="utf-8")
+    lines = f.read()
+    answer = lines.find(userPassword)
+    if answer != -1:
+        print("Password found in list of common words")
+        return 0
+        
     
     if len(userPassword) > 1024:
         print("Password too long")
         return 0
+    
     elif len(userPassword) >= 14:
         length = 1
       
@@ -64,9 +78,15 @@ def main():
     print("lower:", lowers)
     print("symbol:", symbol)
     print("number:", number)
+
+
+def main():
+    # Grab input from stdin
+    print("Enter in a list of passwords to check, seperated by newlines and ending with 'done':")
+    userPassword = input()
     
-    # print("Password:", userPassword)
-    # print("Score:", score)
+    print("Password:", userPassword)
+    print("Score:", checkStrength(userPassword))
 
 
 if (__name__ == "__main__"):
