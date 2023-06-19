@@ -1,0 +1,18 @@
+Strength	Password
+------------------------
+Common Word	spencer
+Common Pass	P@ssw0rd
+Very Secure	1234dfghGHJK%^&*(
+Weak       	P@))s
+Very Secure	1YQH&uFGyd7%wo*5B!2k
+Very Secure	%9Y50*U4!lf@V^Z5aJ@p
+Common Pass	aphrodite
+Moderate   	w#j&cqzrg&zr$$@q&j$z
+Weak       	lc@%*kemo#w&
+Weak       	HJ%%@#W*!^QS
+Common Word	apple
+Very Weak  	QPBQSCDGKPJT
+Weak       	8%*@%6#%$*97
+Common Pass	Microsoft
+Moderate   	!2%&2%##4!%227^49
+Secure     	!%3*^!x2h#9j39&z%

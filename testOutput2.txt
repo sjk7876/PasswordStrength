@@ -1,0 +1,18 @@
+Score (Max 9)	Strength	Password
+--------------------------------
+0		Common Word	spencer
+0		Common Pass	P@ssw0rd
+9		Very Secure	1234dfghGHJK%^&*(
+4		Weak       	P@))s
+9		Very Secure	1YQH&uFGyd7%wo*5B!2k
+9		Very Secure	%9Y50*U4!lf@V^Z5aJ@p
+0		Common Pass	aphrodite
+5		Moderate   	w#j&cqzrg&zr$$@q&j$z
+4		Weak       	lc@%*kemo#w&
+4		Weak       	HJ%%@#W*!^QS
+0		Common Word	apple
+2		Very Weak  	QPBQSCDGKPJT
+4		Weak       	8%*@%6#%$*97
+0		Common Pass	Microsoft
+5		Moderate   	!2%&2%##4!%227^49
+7		Secure     	!%3*^!x2h#9j39&z%
