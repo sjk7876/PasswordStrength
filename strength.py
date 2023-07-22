@@ -147,7 +147,6 @@ class Password:
             elif self.score == 9:
                 self.strength = "Very Secure"
 
-
 class Settings:
     def __init__(self):
         self.input = ""
@@ -155,7 +154,7 @@ class Settings:
         self.verbosity = 2
 
 
-def getInputs(settings):
+def getSettings(settings):
     # Handle parameters
     parser = argparse.ArgumentParser(description="Checks the strength of a given list of passwords",
                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)    
@@ -180,29 +179,17 @@ def getInputs(settings):
             return 0
 
 
-def main():
-    # Fun little things
-    nyan = False
-    cool = False
+def readPasswords(settings):
+    passwordList = []
 
-    settings = Settings()
-
-    getInputs(settings)
-    
-    # Print fancy jazz
-    if settings.input == None or settings.output == None:
-        print(ASCII_ART_BANNER)
-    
     # Open files for future checks
-    passF = open("100k_password.txt", "r", encoding="utf-8")
+    passF = open("data/100k_password.txt", "r", encoding="utf-8")
     commonPasswords = passF.read()
     passF.close()
     
-    wordF = open("10k_words.txt", "r", encoding="utf-8")
+    wordF = open("data/10k_words.txt", "r", encoding="utf-8")
     commonWords = wordF.read()
     wordF.close()
-    
-    passwordList = []
 
     # Grab passwords from given location
     try:
@@ -233,10 +220,28 @@ def main():
                 
         inF.close()
                 
-    # except Exception as error: 
-    #         print(error)
     except: 
         print("Error reading input file -", settings.input)
+    
+    return passwordList
+
+
+def main():
+    # Fun little things
+    nyan = False
+    cool = False
+
+    settings = Settings()
+
+    getSettings(settings)
+    
+    # Print fancy jazz
+    if settings.input == None or settings.output == None:
+        print(ASCII_ART_BANNER)
+    
+    passwordList = readPasswords(settings)
+
+
     
     # for p in passwordList:
     #     print(p.password, p.score)
