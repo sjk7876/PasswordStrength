@@ -148,11 +148,14 @@ class Password:
                 self.strength = "Very Secure"
 
 
-def main():
-    # Fun little things
-    nyan = False
-    cool = False
+class Settings:
+    def __init__(self):
+        self.input = ""
+        self.output = ""
+        self.verbosity = 2
 
+
+def getInputs(settings):
     # Handle parameters
     parser = argparse.ArgumentParser(description="Checks the strength of a given list of passwords",
                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)    
@@ -162,22 +165,32 @@ def main():
     args = vars(parser.parse_args())
     
     # Input Arguments
-    inputFile = args["input_file"]
-    outputFile = args["output_file"]
-    verbosity = args["verbosity"]
+    settings.input = args["input_file"]
+    settings.output = args["output_file"]
+    settings.verbosity = args["verbosity"]
         
     # Check if input file exists
-    if inputFile != None:
+    if settings.input != None:
         try:
-            inTest = open(inputFile, "r")
+            inTest = open(settings.input, "r")
             inTest.close()
                 
         except FileNotFoundError:
-            print("File", inputFile, "not found")
+            print("File", settings.input, "not found")
             return 0
+
+
+def main():
+    # Fun little things
+    nyan = False
+    cool = False
+
+    settings = Settings()
+
+    getInputs(settings)
     
     # Print fancy jazz
-    if inputFile == None or outputFile == None:
+    if settings.input == None or settings.output == None:
         print(ASCII_ART_BANNER)
     
     # Open files for future checks
@@ -193,11 +206,11 @@ def main():
 
     # Grab passwords from given location
     try:
-        if inputFile == None:
+        if settings.input == None:
             print("> Enter a list of passwords, with with each password \n> on its own line and an empty line to finish.")
             inF = sys.stdin
         else:
-            inF = open(inputFile, "r")
+            inF = open(settings.input, "r")
                 
         line = inF.readline()
                 
@@ -223,7 +236,7 @@ def main():
     # except Exception as error: 
     #         print(error)
     except: 
-        print("Error reading input file -", inputFile)
+        print("Error reading input file -", settings.input)
     
     # for p in passwordList:
     #     print(p.password, p.score)
@@ -231,19 +244,19 @@ def main():
     # return 0
     
     try:
-        if outputFile == None:
+        if settings.output == None:
             outF = sys.stdout
         else:
-            outF = open(outputFile, "w")
+            outF = open(settings.output, "w")
         
-        if verbosity == 1:
+        if settings.verbosity == 1:
             outF.write("Strength\tPassword\n")
             outF.write("------------------------\n")
             
             for p in passwordList:
                 outF.write(p.strength + "\t" + p.password + "\n")
                 
-        elif verbosity == 2:
+        elif settings.verbosity == 2:
             outF.write("Score (Max 9)\tStrength\tPassword\n")
             outF.write("----------------------------------------\n")
             
@@ -259,15 +272,15 @@ def main():
                     str(p.lowers) + "\t\t" + str(p.symbol) + "\t\t" + str(p.number) + "\t\t" + \
                     str(p.score) + "\t\t" + p.strength + "\t" + p.password + "\n")
         
-        if outputFile == None and nyan:
+        if settings.output == None and nyan:
             print(ASCII_ART_NYAN)
-        if outputFile == None and cool:
+        if settings.output == None and cool:
             print(ASCII_ART_COOL)
                                         
         outF.close()
             
-        if outputFile != None:
-            print("Written to file -", outputFile)
+        if settings.output != None:
+            print("Written to file -", settings.output)
             
     except Exception as error: 
             print(error)
@@ -277,3 +290,14 @@ def main():
 
 if (__name__ == "__main__"):
     main()
+
+
+"""
+TODO
+
+Split main into multiple functions
+Export to csv
+If no output filename provided, prompt for one
+    Either create a new one or use provided one from question
+
+"""
