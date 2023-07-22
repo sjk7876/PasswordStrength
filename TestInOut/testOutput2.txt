@@ -1,5 +1,5 @@
 Score (Max 9)	Strength	Password
---------------------------------
+----------------------------------------
 0		Common Word	spencer
 0		Common Pass	P@ssw0rd
 9		Very Secure	1234dfghGHJK%^&*(
