@@ -60,22 +60,24 @@ NUM_NUMBERS = 2
 NUM_SYMBOLS = 2
 NUM_CHARACTERS = 14
 
-# Default Password Rules
-    #   At least 14 characters
-    #   At least 2 uppercase
-    #   At least 2 lowercase
-    #   At least 2 symbols
-    #   At least 2 numbers
-    #   No dictionary words
-    #   No common passwords
-    #   Max Length 1024 characters
+"""
+Default Password Rules
+    At least 14 characters
+    At least 2 uppercase
+    At least 2 lowercase
+    At least 2 symbols
+    At least 2 numbers
+    No dictionary words
+    No common passwords
+    Max Length 1024 characters
     
-    # Start with 0 points
-    # 9   = best
-    # 7-8 = secure
-    # 5-6 = moderate
-    # 3-4 = weak
-    # 0-2 = very weak
+    Start with 0 points
+    9   = best
+    7-8 = secure
+    5-6 = moderate
+    3-4 = weak
+    0-2 = very weak
+"""
 
 
 class Password:
@@ -207,10 +209,10 @@ def readPasswords(settings):
                                     
             if temp.password == "":
                 break
-            elif "nyan" in temp.password:
-                nyan = True
-            elif "cool" in temp.password:
-                cool = True
+            # elif "nyan" in temp.password:
+            #     nyan = True
+            # elif "cool" in temp.password:
+            #     cool = True
                                     
             temp.update(commonPasswords, commonWords)
                                                     
@@ -226,28 +228,7 @@ def readPasswords(settings):
     return passwordList
 
 
-def main():
-    # Fun little things
-    nyan = False
-    cool = False
-
-    settings = Settings()
-
-    getSettings(settings)
-    
-    # Print fancy jazz
-    if settings.input == None or settings.output == None:
-        print(ASCII_ART_BANNER)
-    
-    passwordList = readPasswords(settings)
-
-
-    
-    # for p in passwordList:
-    #     print(p.password, p.score)
-    
-    # return 0
-    
+def writePasswords(passwordList, settings):
     try:
         if settings.output == None:
             outF = sys.stdout
@@ -276,21 +257,43 @@ def main():
                 outF.write(str(p.length) + "\t" + str(p.uppers) + "\t\t" + \
                     str(p.lowers) + "\t\t" + str(p.symbol) + "\t\t" + str(p.number) + "\t\t" + \
                     str(p.score) + "\t\t" + p.strength + "\t" + p.password + "\n")
-        
-        if settings.output == None and nyan:
-            print(ASCII_ART_NYAN)
-        if settings.output == None and cool:
-            print(ASCII_ART_COOL)
                                         
         outF.close()
             
         if settings.output != None:
             print("Written to file -", settings.output)
             
-    except Exception as error: 
-            print(error)
-    # except:
-    #     print("Error writing to output file -", outputFile)
+    except:
+        print("Error writing to output file -", settings.output)
+
+
+def main():
+    # Fun little things
+    # nyan = False
+    # cool = False
+
+    settings = Settings()
+
+    getSettings(settings)
+    
+    # Print fancy jazz
+    if settings.input == None or settings.output == None:
+        print(ASCII_ART_BANNER)
+    
+    passwordList = readPasswords(settings)
+    
+    # for p in passwordList:
+    #     print(p.password, p.score)
+    
+    # return 0
+
+    writePasswords(passwordList, settings)
+    
+    # Print fancy jazz
+    # if settings.output == None and nyan:
+    #         print(ASCII_ART_NYAN)
+    # if settings.output == None and cool:
+    #     print(ASCII_ART_COOL)
 
 
 if (__name__ == "__main__"):
