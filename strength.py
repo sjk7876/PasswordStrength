@@ -303,9 +303,9 @@ if (__name__ == "__main__"):
 """
 TODO
 
-Split main into multiple functions
 Export to csv
-If no output filename provided, prompt for one
-    Either create a new one or use provided one from question
+
+If no output filename provided, prompt for one - maybe
+    Either create a new one or use provided one from question - maybe
 
 """
